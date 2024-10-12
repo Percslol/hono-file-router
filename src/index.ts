@@ -28,7 +28,8 @@ async function createFolderRoute({ path }: { path?: string } = {}) {
 				import(`file://${route.file}`).then((importedRoutes) => {
 					httpMethods.forEach((method) => {
 						if (method !== 'index') {
-							if (importedRoutes[method]) app[method.toLowerCase() as Lowercase<typeof method>](route.route, ...importedRoutes[method]);
+							// if (importedRoutes[method]) app[method.toLowerCase() as Lowercase<typeof method>](route.route, ...importedRoutes[method]);
+							if (importedRoutes[method]) app.on(method, route.route, ...importedRoutes[method]);
 						}
 					});
 				}),
@@ -36,7 +37,8 @@ async function createFolderRoute({ path }: { path?: string } = {}) {
 		} else {
 			promises.push(
 				import(`file://${route.file}`).then(async (importedRoute) => {
-					app[route.method.toLowerCase() as Lowercase<typeof route.method>](route.route, ...importedRoute.default);
+					// app[route.method.toLowerCase() as Lowercase<typeof route.method>](route.route, ...importedRoute.default);
+					app.on(route.method, route.route, ...importedRoute.default);
 				}),
 			);
 		}

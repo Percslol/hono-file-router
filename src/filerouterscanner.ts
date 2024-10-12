@@ -1,11 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-/*
-From: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
-Removed HEAD, CONNECT, TRACE as Hono does not have these methods
-*/
-export const httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'index'] as const;
+// From: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+export const httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD', 'CONNECT', 'TRACE', 'index'] as const;
 
 type httpMethodTypes = { [K in (typeof httpMethods)[number]]?: RouteInfo };
 export type RouteInfo = { file: string; route: string; method: (typeof httpMethods)[number] };
