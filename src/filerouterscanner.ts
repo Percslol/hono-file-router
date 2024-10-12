@@ -19,7 +19,6 @@ export function fileRouterScanner(cwd: string, initpath: string, index?: string)
 	const errors: { message: string; data: any }[] = [];
 
 	normalFolders.forEach((folder) => {
-		console.log(folder.name, cleanupPath(folder.path), 'directory?', folder.directory);
 		if (!folder.directory) return;
 
 		const methodAssignment: httpMethodTypes & Record<string, RouteInfo> = {};
@@ -32,7 +31,7 @@ export function fileRouterScanner(cwd: string, initpath: string, index?: string)
 			if (jsExists && tsExists) errors.push({ message: 'Both js and ts files exist for that method. Only one must exist.', data: pathToFile });
 
 			if (jsExists || tsExists)
-				methodAssignment[index ? 'index' : methodOrIndex] = {
+				methodAssignment[methodOrIndex] = {
 					file: cleanupPath(`${pathToFile}.${jsExists ? 'js' : 'ts'}`),
 					route: `${folder.path.replaceAll(resolvedPath, '')}/${folder.name === '.' ? '' : folder.name}`,
 				};
