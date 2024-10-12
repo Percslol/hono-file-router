@@ -2,8 +2,6 @@
 	"compilerOptions": {
 		"target": "es2021",
 		"module": "ESNext",
-		"allowJs": true,
-		"checkJs": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
