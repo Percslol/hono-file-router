@@ -7,7 +7,7 @@ export const httpMethods = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', '
 type httpMethodTypes = { [K in (typeof httpMethods)[number]]?: RouteInfo };
 type RouteInfo = { file: string; route: string };
 
-export function getListOfRoutes(cwd: string, initpath: string, index?: string) {
+export function fileRouterScanner(cwd: string, initpath: string, index?: string) {
 	const folders = fs.readdirSync(`${cwd}/${initpath}`, { recursive: true, withFileTypes: true });
 
 	const normalFolders = folders.map((folders) => ({ name: folders.name, path: cleanupPath(folders.parentPath), directory: folders.isDirectory() }));
