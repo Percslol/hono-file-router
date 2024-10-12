@@ -37,7 +37,6 @@ async function createFolderRoute({ path }: { path?: string } = {}) {
 			promises.push(
 				import(`file://${route.file}`).then(async (importedRoute) => {
 					app[route.method.toLowerCase() as Lowercase<typeof route.method>](route.route, ...importedRoute.default);
-					console.log(0, route.route, route.file, importedRoute);
 				}),
 			);
 		}
