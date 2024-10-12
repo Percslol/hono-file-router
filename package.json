@@ -18,7 +18,7 @@
 	"private": false,
 	"scripts": {
 		"dev": "pkgroll --watch",
-		"build": "pkgroll",
+		"build": "pkgroll --minify --sourcemap=inline",
 		"test": "echo \"no test for now\""
 	},
 	"keywords": [
