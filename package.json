@@ -1,0 +1,46 @@
+{
+	"name": "hono-file-router",
+	"version": "0.0.1",
+	"description": "File-based router for easier route management for hono.",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.cts",
+	"exports": {
+		"require": {
+			"types": "./dist/index.d.cts",
+			"default": "./dist/index.cjs"
+		},
+		"import": {
+			"types": "./dist/index.d.mts",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"private": false,
+	"scripts": {
+		"dev": "pkgroll --watch",
+		"build": "pkgroll",
+		"test": "echo \"no test for now\""
+	},
+	"keywords": [
+		"hono",
+		"file",
+		"router"
+	],
+	"author": "thisjt",
+	"license": "MIT",
+	"type": "module",
+	"dependencies": {
+		"hono": "^4.6.4"
+	},
+	"devDependencies": {
+		"@types/node": "^22.7.5",
+		"eslint": "^9.12.0",
+		"eslint-config-prettier": "^9.1.0",
+		"globals": "^15.11.0",
+		"pkgroll": "^2.5.0",
+		"prettier": "^3.3.3",
+		"tsx": "^4.19.1",
+		"typescript": "^5.6.3",
+		"vitest": "^2.1.2"
+	}
+}
