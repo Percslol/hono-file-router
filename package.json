@@ -2,16 +2,23 @@
 	"name": "hono-file-router",
 	"version": "0.0.1",
 	"description": "File-based router for easier route management for hono.",
-	"module": "./src/index.js",
-	"main": "./src/index.js",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.cts",
 	"exports": {
-		".": {
-			"require": "./src/index.js",
-			"import": "./src/index.js"
+		"require": {
+			"types": "./dist/index.d.cts",
+			"default": "./dist/index.cjs"
+		},
+		"import": {
+			"types": "./dist/index.d.mts",
+			"default": "./dist/index.mjs"
 		}
 	},
 	"private": false,
 	"scripts": {
+		"dev": "pkgroll --watch",
+		"build": "pkgroll",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [
@@ -29,6 +36,7 @@
 		"eslint": "^9.12.0",
 		"eslint-config-prettier": "^9.1.0",
 		"globals": "^15.11.0",
+		"pkgroll": "^2.5.0",
 		"prettier": "^3.3.3",
 		"tsx": "^4.19.1",
 		"typescript": "^5.6.3",
