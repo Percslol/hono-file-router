@@ -1,4 +1,4 @@
-name: NPM Registry Publisher
+name: publish to npm registry
 
 on:
   release:
