@@ -1,5 +1,6 @@
 import fs from 'fs';
 
+// From: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
 export const httpMethods = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH'];
 
 export function getListOfRoutes(cwd: string, path: string, index?: string) {
