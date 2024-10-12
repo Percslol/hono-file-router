@@ -1,6 +1,6 @@
 {
 	"name": "hono-file-router",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "File-based router for easier route management for hono.",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.mjs",
@@ -18,7 +18,7 @@
 	"private": false,
 	"scripts": {
 		"dev": "pkgroll --watch",
-		"build": "pkgroll",
+		"build": "pkgroll --minify --sourcemap=inline",
 		"test": "echo \"no test for now\""
 	},
 	"keywords": [
