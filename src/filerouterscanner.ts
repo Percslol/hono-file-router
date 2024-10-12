@@ -30,12 +30,14 @@ export function fileRouterScanner(cwd: string, initpath: string) {
 
 			if (jsExists && tsExists) errors.push({ message: 'Both js and ts files exist for that method. Only one must exist.', data: pathToFile });
 
-			if (jsExists || tsExists)
+			if (jsExists || tsExists) {
+				const route = `${folder.path.replaceAll(resolvedPath, '')}/${folder.name === '.' ? '' : folder.name}`;
 				methodAssignment[methodOrIndex] = {
 					file: cleanupPath(`${pathToFile}.${jsExists ? 'js' : 'ts'}`),
-					route: `${folder.path.replaceAll(resolvedPath, '')}/${folder.name === '.' ? '' : folder.name}`,
+					route: replaceParams(route),
 					method: methodOrIndex,
 				};
+			}
 		});
 
 		if (methodAssignment.index && Object.keys(methodAssignment).length !== 1)
@@ -46,6 +48,10 @@ export function fileRouterScanner(cwd: string, initpath: string) {
 
 	function cleanupPath(path: string) {
 		return path.replaceAll('/./', '/').replaceAll('\\', '/');
+	}
+
+	function replaceParams(path: string) {
+		return path.replace(/\[([^\]]+)\]/g, ':$1');
 	}
 
 	if (errors.length) throw Error(JSON.stringify(errors, null, '\t'));
