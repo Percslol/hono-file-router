@@ -1,16 +1,51 @@
-import { getCwd, fileRouterScanner } from './filerouterscanner';
+import { getCwd, fileRouterScanner, httpMethods } from './filerouterscanner';
+import { type RouteInfo } from './filerouterscanner';
 
-export async function createFolderRoute({ path }: { path?: string } = {}) {
+import { Hono } from 'hono';
+
+import { createHandler } from './routegenerator';
+
+async function createFolderRoute({ path }: { path?: string } = {}) {
 	if (!path) throw Error('path is required');
 
 	const cwd = getCwd();
-	const routes = fileRouterScanner(cwd, path, 'index');
+	const routes = fileRouterScanner(cwd, path);
+	const flattenedRoutes: RouteInfo[] = [];
 
-	await Promise.all(
-		routes.map(async (route) => {
-			// if (route.)
+	routes.forEach((route) =>
+		httpMethods.forEach((method) => {
+			const routeMethod = route[method];
+			if (routeMethod) flattenedRoutes.push(routeMethod);
 		}),
 	);
 
-	console.log(routes);
+	const promises: Promise<any>[] = [];
+	const app = new Hono();
+
+	flattenedRoutes.forEach((route) => {
+		if (route.method === 'index') {
+			promises.push(
+				import(`file://${route.file}`).then((importedRoutes) => {
+					httpMethods.forEach((method) => {
+						if (method !== 'index') {
+							if (importedRoutes[method]) app[method.toLowerCase() as Lowercase<typeof method>](route.route, ...importedRoutes[method]);
+						}
+					});
+				}),
+			);
+		} else {
+			promises.push(
+				import(`file://${route.file}`).then(async (importedRoute) => {
+					app[route.method.toLowerCase() as Lowercase<typeof route.method>](route.route, ...importedRoute.default);
+					console.log(0, route.route, route.file, importedRoute);
+				}),
+			);
+		}
+	});
+
+	await Promise.all(promises);
+
+	return app;
 }
+
+export { createHandler, createFolderRoute };
