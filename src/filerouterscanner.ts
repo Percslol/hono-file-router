@@ -2,12 +2,12 @@ import fs from 'fs';
 import path from 'path';
 
 // From: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
-export const httpMethods = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH'] as const;
+export const httpMethods = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH', 'index'] as const;
 
 type httpMethodTypes = { [K in (typeof httpMethods)[number]]?: RouteInfo };
-type RouteInfo = { file: string; route: string };
+export type RouteInfo = { file: string; route: string; method: (typeof httpMethods)[number] };
 
-export function fileRouterScanner(cwd: string, initpath: string, index?: string) {
+export function fileRouterScanner(cwd: string, initpath: string) {
 	const folders = fs.readdirSync(`${cwd}/${initpath}`, { recursive: true, withFileTypes: true });
 
 	const normalFolders = folders.map((folders) => ({ name: folders.name, path: cleanupPath(folders.parentPath), directory: folders.isDirectory() }));
@@ -15,7 +15,7 @@ export function fileRouterScanner(cwd: string, initpath: string, index?: string)
 	const resolvedPath = cleanupPath(path.resolve(initpath));
 	normalFolders.push({ name: '.', path: resolvedPath, directory: true });
 
-	const routes: { [key: string]: RouteInfo }[] = [];
+	const routes: httpMethodTypes[] = [];
 	const errors: { message: string; data: any }[] = [];
 
 	normalFolders.forEach((folder) => {
@@ -23,7 +23,7 @@ export function fileRouterScanner(cwd: string, initpath: string, index?: string)
 
 		const methodAssignment: httpMethodTypes & Record<string, RouteInfo> = {};
 
-		[...httpMethods, ...(index ? [index] : [])].forEach((methodOrIndex) => {
+		httpMethods.forEach((methodOrIndex) => {
 			const pathToFile = `${folder.path}/${folder.name}/${methodOrIndex}`;
 			const jsExists = fs.existsSync(`${pathToFile}.js`);
 			const tsExists = fs.existsSync(`${pathToFile}.ts`);
@@ -34,6 +34,7 @@ export function fileRouterScanner(cwd: string, initpath: string, index?: string)
 				methodAssignment[methodOrIndex] = {
 					file: cleanupPath(`${pathToFile}.${jsExists ? 'js' : 'ts'}`),
 					route: `${folder.path.replaceAll(resolvedPath, '')}/${folder.name === '.' ? '' : folder.name}`,
+					method: methodOrIndex,
 				};
 		});
 
