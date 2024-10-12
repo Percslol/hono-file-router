@@ -19,7 +19,7 @@
 	"scripts": {
 		"dev": "pkgroll --watch",
 		"build": "pkgroll",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"no test for now\""
 	},
 	"keywords": [
 		"hono",
