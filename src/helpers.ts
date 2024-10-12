@@ -2,22 +2,14 @@ import fs from 'fs';
 
 export const httpMethods = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH'];
 
-/**
- * @param {string} cwd
- * @param {string} path
- * @param {string} [index]
- */
-export function getListOfRoutes(cwd, path, index) {
+export function getListOfRoutes(cwd: string, path: string, index?: string) {
 	const folders = fs.readdirSync(`${cwd}/${path}`);
 
-	/**@type {Object<string, string>[]} */
-	const routes = [];
-	/**@type {{message:string, data:*}[]} */
-	const errors = [];
+	const routes: { [key: string]: string }[] = [];
+	const errors: { message: string; data: any }[] = [];
 
 	folders.forEach((folder) => {
-		/**@type {Object<string, string>} */
-		const methodAssignment = {};
+		const methodAssignment: { [key: string]: string } = {};
 
 		[...httpMethods, ...(index ? [index] : [])].forEach((methodOrIndex) => {
 			const pathToFile = `${cwd}/${path}/${folder}/${methodOrIndex}`;

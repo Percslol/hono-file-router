@@ -1,10 +1,6 @@
 import { getCwd, getListOfRoutes } from './helpers';
 
-/**
- * @param {object} p
- * @param {string} [p.path]
- */
-export async function createFolderRoute({ path } = {}) {
+export async function createFolderRoute({ path }: { path?: string } = {}) {
 	if (!path) throw Error('path is required');
 
 	const cwd = getCwd();
