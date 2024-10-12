@@ -1,0 +1,19 @@
+{
+	"name": "hono-file-router",
+	"version": "0.0.1",
+	"description": "File-based router for easier route management for hono.",
+	"main": "index.js",
+	"private": false,
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"hono",
+		"router"
+	],
+	"author": "thisjt",
+	"license": "MIT",
+	"type": "module",
+	"dependencies": {},
+	"devDependencies": {}
+}
