@@ -79,3 +79,22 @@ export const POST = createHandler(async (context) => {
 ```
 
 Keep in mind that methods are case sensitive and must always be in uppercase.
+
+## To Do
+
+Features that needs to be implemented. Feel free to contribute.
+
+### Must Have Features
+
+- [ ] Build (`import()` is not build-friendly, an intermediate compile step is needed)
+- [ ] Rest parameters (`/path/[...to]/file` will allow `/path/this/is/a/long/file` route)
+- [ ] 404 error file (`error.ts` maybe?)
+- [ ] Optional parameters (sveltekit uses `[[optional]]` parameters)
+- [ ] Route sorting (which ones go first if multiple matches are found)
+- [ ] [Route Matcher](https://kit.svelte.dev/docs/advanced-routing#matching)
+- [ ] Encoding (unusable chars in the filesystem can be used as chars in routes)
+- [ ] RegEx Matcher (we can leverage the use of encoding when that feature is done)
+
+### Nice to Have Features
+
+- [ ] None for now
