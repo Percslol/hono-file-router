@@ -1,2 +1,9 @@
 
 node_modules/
+.github/
+src/
+.prettierignore
+README.md
+eslint.config.js
+prettier.config.js
+tsconfig.json
