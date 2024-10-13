@@ -19,7 +19,8 @@
 	"scripts": {
 		"dev": "pkgroll --watch",
 		"build": "pkgroll",
-		"test": "echo \"no test for now\""
+		"test": "vitest --run",
+		"test:watch": "vitest"
 	},
 	"keywords": [
 		"hono",
