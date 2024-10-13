@@ -2,6 +2,7 @@
 node_modules/
 .github/
 src/
+coverage/
 .prettierignore
 README.md
 eslint.config.js
