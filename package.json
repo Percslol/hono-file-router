@@ -1,6 +1,6 @@
 {
 	"name": "hono-file-router",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "File-based router for easier route management for hono.",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.mjs",
@@ -19,7 +19,8 @@
 	"scripts": {
 		"dev": "pkgroll --watch",
 		"build": "pkgroll",
-		"test": "echo \"no test for now\""
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"keywords": [
 		"hono",
@@ -34,6 +35,7 @@
 	},
 	"devDependencies": {
 		"@types/node": "^22.7.5",
+		"@vitest/coverage-istanbul": "^2.1.2",
 		"eslint": "^9.12.0",
 		"eslint-config-prettier": "^9.1.0",
 		"globals": "^15.11.0",
