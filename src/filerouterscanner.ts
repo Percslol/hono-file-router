@@ -23,8 +23,8 @@ export function fileRouterScanner(cwd: string, initpath: string) {
 
 		httpMethods.forEach((methodOrIndex) => {
 			const pathToFile = `${folder.path}/${folder.name}/${methodOrIndex}`;
-			const jsExists = fs.existsSync(`${pathToFile}.js`);
-			const tsExists = fs.existsSync(`${pathToFile}.ts`);
+			const jsExists = fileExists(`${pathToFile}.js`);
+			const tsExists = fileExists(`${pathToFile}.ts`);
 
 			if (jsExists && tsExists) errors.push({ message: 'Both js and ts files exist for that method. Only one must exist.', data: pathToFile });
 
