@@ -8,9 +8,7 @@ type httpMethodTypes = { [K in (typeof httpMethods)[number]]?: RouteInfo };
 export type RouteInfo = { file: string; route: string; method: (typeof httpMethods)[number] };
 
 export function fileRouterScanner(cwd: string, initpath: string) {
-	const folders = fs.readdirSync(`${cwd}/${initpath}`, { recursive: true, withFileTypes: true });
-
-	const normalFolders = folders.map((folders) => ({ name: folders.name, path: cleanupPath(folders.parentPath), directory: folders.isDirectory() }));
+	const normalFolders = directoryScanner(`${cwd}/${initpath}`);
 
 	const resolvedPath = cleanupPath(path.resolve(initpath));
 	normalFolders.push({ name: '.', path: resolvedPath, directory: true });
@@ -46,10 +44,6 @@ export function fileRouterScanner(cwd: string, initpath: string) {
 		routes.push(methodAssignment);
 	});
 
-	function cleanupPath(path: string) {
-		return path.replaceAll('/./', '/').replaceAll('\\', '/');
-	}
-
 	function replaceParams(path: string) {
 		return path.replace(/\[([^\]]+)\]/g, ':$1');
 	}
@@ -57,6 +51,19 @@ export function fileRouterScanner(cwd: string, initpath: string) {
 	if (errors.length) throw Error(JSON.stringify(errors, null, '\t'));
 
 	return routes;
+}
+
+export function fileExists(file: string) {
+	return fs.existsSync(file);
+}
+
+export function directoryScanner(path: string) {
+	const folders = fs.readdirSync(path, { recursive: true, withFileTypes: true });
+	return folders.map((folders) => ({ name: folders.name, path: cleanupPath(folders.parentPath), directory: folders.isDirectory() }));
+}
+
+export function cleanupPath(path: string) {
+	return path.replaceAll('/./', '/').replaceAll('\\', '/');
 }
 
 export function getCwd() {
