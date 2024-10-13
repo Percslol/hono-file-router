@@ -19,8 +19,8 @@
 	"scripts": {
 		"dev": "pkgroll --watch",
 		"build": "pkgroll",
-		"test": "vitest run --coverage",
-		"test:watch": "vitest --coverage"
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"keywords": [
 		"hono",
