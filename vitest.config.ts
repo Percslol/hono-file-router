@@ -4,7 +4,7 @@ export default defineConfig({
 	test: {
 		coverage: {
 			provider: 'istanbul',
-			include: ['./src/**/*'],
+			include: ['./dist/**/*.cjs', './dist/**/*.mjs'],
 			enabled: true,
 		},
 	},
