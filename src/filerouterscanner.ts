@@ -28,7 +28,7 @@ export function fileRouterScanner(initpath: string) {
 			if (jsExists && tsExists) errors.push({ message: 'Both js and ts files exist for that method. Only one must exist.', data: pathToFile });
 
 			if (jsExists || tsExists) {
-				const route = `${folder.path.replaceAll(resolvedPath, '')}/${folder.name === '.' ? '' : folder.name}`;
+				const route = `${folder.path.replaceAll(resolvedPath, '').replaceAll(/\\/g, '/')}/${folder.name === '.' ? '' : folder.name}`;
 				methodAssignment[methodOrIndex] = {
 					file: `${pathToFile}.${jsExists ? 'js' : 'ts'}`,
 					route: replaceParams(route),

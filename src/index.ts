@@ -24,7 +24,7 @@ async function createFolderRoute({ path }: { path?: string } = {}) {
 	flattenedRoutes.forEach((route) => {
 		if (route.method === 'index') {
 			promises.push(
-				import(route.file).then((importedRoutes) => {
+				import(`file://${route.file}`).then((importedRoutes) => {
 					httpMethods.forEach((method) => {
 						if (method !== 'index') {
 							if (importedRoutes[method]) app.on(method, route.route, ...importedRoutes[method]);
@@ -34,7 +34,7 @@ async function createFolderRoute({ path }: { path?: string } = {}) {
 			);
 		} else {
 			promises.push(
-				import(route.file).then(async (importedRoute) => {
+				import(`file://${route.file}`).then(async (importedRoute) => {
 					app.on(route.method, route.route, ...importedRoute.default);
 				}),
 			);
