@@ -31,18 +31,18 @@
 	"license": "MIT",
 	"type": "module",
 	"dependencies": {
-		"hono": "^4.6.4"
+		"hono": "^4.8.5"
 	},
 	"devDependencies": {
-		"@types/node": "^22.7.5",
-		"@vitest/coverage-istanbul": "^2.1.2",
-		"eslint": "^9.12.0",
-		"eslint-config-prettier": "^9.1.0",
-		"globals": "^15.11.0",
-		"pkgroll": "^2.5.0",
-		"prettier": "^3.3.3",
-		"tsx": "^4.19.1",
-		"typescript": "^5.6.3",
-		"vitest": "^2.1.2"
+		"@types/node": "^24.1.0",
+		"@vitest/coverage-istanbul": "^3.2.4",
+		"eslint": "^9.31.0",
+		"eslint-config-prettier": "^10.1.8",
+		"globals": "^16.3.0",
+		"pkgroll": "^2.14.3",
+		"prettier": "^3.6.2",
+		"tsx": "^4.20.3",
+		"typescript": "^5.8.3",
+		"vitest": "^3.2.4"
 	}
 }

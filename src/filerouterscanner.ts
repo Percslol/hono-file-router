@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 // From: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
 export const httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD', 'CONNECT', 'TRACE', 'index'] as const;
@@ -7,12 +7,11 @@ export const httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 
 type httpMethodTypes = { [K in (typeof httpMethods)[number]]?: RouteInfo };
 export type RouteInfo = { file: string; route: string; method: (typeof httpMethods)[number] };
 
-export function fileRouterScanner(cwd: string, initpath: string) {
-	const normalFolders = directoryScanner(`${cwd}/${initpath}`);
+export function fileRouterScanner(initpath: string) {
+	const normalFolders = directoryScanner(initpath);
 
-	const resolvedPath = cleanupPath(path.resolve(initpath));
-	normalFolders.push({ name: '.', path: resolvedPath, directory: true });
-
+	const resolvedPath = path.resolve(initpath);
+	
 	const routes: httpMethodTypes[] = [];
 	const errors: { message: string; data: any }[] = [];
 
@@ -31,7 +30,7 @@ export function fileRouterScanner(cwd: string, initpath: string) {
 			if (jsExists || tsExists) {
 				const route = `${folder.path.replaceAll(resolvedPath, '')}/${folder.name === '.' ? '' : folder.name}`;
 				methodAssignment[methodOrIndex] = {
-					file: cleanupPath(`${pathToFile}.${jsExists ? 'js' : 'ts'}`),
+					file: `${pathToFile}.${jsExists ? 'js' : 'ts'}`,
 					route: replaceParams(route),
 					method: methodOrIndex,
 				};
@@ -43,7 +42,7 @@ export function fileRouterScanner(cwd: string, initpath: string) {
 
 		routes.push(methodAssignment);
 	});
-
+	
 	function replaceParams(path: string) {
 		return path.replace(/\[([^\]]+)\]/g, ':$1');
 	}
@@ -59,13 +58,5 @@ export function fileExists(file: string) {
 
 export function directoryScanner(path: string) {
 	const folders = fs.readdirSync(path, { recursive: true, withFileTypes: true });
-	return folders.map((folders) => ({ name: folders.name, path: cleanupPath(folders.parentPath), directory: folders.isDirectory() }));
-}
-
-export function cleanupPath(path: string) {
-	return path.replaceAll('/./', '/').replaceAll('\\', '/');
-}
-
-export function getCwd() {
-	return process.cwd();
+	return folders.map((folders) => ({ name: folders.name, path: folders.parentPath, directory: folders.isDirectory() }));
 }

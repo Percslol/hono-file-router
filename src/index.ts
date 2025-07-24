@@ -1,4 +1,4 @@
-import { getCwd, fileRouterScanner, httpMethods } from './filerouterscanner';
+import { fileRouterScanner, httpMethods } from './filerouterscanner';
 import { type RouteInfo } from './filerouterscanner';
 
 import { Hono } from 'hono';
@@ -8,10 +8,9 @@ import { createHandler } from './routegenerator';
 async function createFolderRoute({ path }: { path?: string } = {}) {
 	if (!path) throw Error('path is required');
 
-	const cwd = getCwd();
-	const routes = fileRouterScanner(cwd, path);
+	const routes = fileRouterScanner(path);
 	const flattenedRoutes: RouteInfo[] = [];
-
+	
 	routes.forEach((route) =>
 		httpMethods.forEach((method) => {
 			const routeMethod = route[method];
@@ -25,7 +24,7 @@ async function createFolderRoute({ path }: { path?: string } = {}) {
 	flattenedRoutes.forEach((route) => {
 		if (route.method === 'index') {
 			promises.push(
-				import(`file://${route.file}`).then((importedRoutes) => {
+				import(route.file).then((importedRoutes) => {
 					httpMethods.forEach((method) => {
 						if (method !== 'index') {
 							if (importedRoutes[method]) app.on(method, route.route, ...importedRoutes[method]);
@@ -35,14 +34,14 @@ async function createFolderRoute({ path }: { path?: string } = {}) {
 			);
 		} else {
 			promises.push(
-				import(`file://${route.file}`).then(async (importedRoute) => {
+				import(route.file).then(async (importedRoute) => {
 					app.on(route.method, route.route, ...importedRoute.default);
 				}),
 			);
 		}
 	});
 
-	await Promise.all(promises);
+	await Promise.allSettled(promises);
 
 	return app;
 }
