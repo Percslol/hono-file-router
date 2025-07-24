@@ -20,7 +20,8 @@
 		"dev": "pkgroll --watch",
 		"build": "pkgroll",
 		"test": "vitest run",
-		"test:watch": "vitest"
+		"test:watch": "vitest",
+		"prepack": "pnpm build"
 	},
 	"keywords": [
 		"hono",
