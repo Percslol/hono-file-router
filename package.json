@@ -17,8 +17,8 @@
 	},
 	"private": false,
 	"scripts": {
-		"dev": "pkgroll --watch",
 		"build": "pkgroll",
+		"dev": "pkgroll --watch",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"prepack": "pnpm build"
@@ -32,18 +32,18 @@
 	"license": "MIT",
 	"type": "module",
 	"dependencies": {
-		"hono": "^4.8.5"
+		"hono": "^4.9.2"
 	},
 	"devDependencies": {
-		"@types/node": "^24.1.0",
+		"@types/node": "^24.3.0",
 		"@vitest/coverage-istanbul": "^3.2.4",
-		"eslint": "^9.31.0",
+		"eslint": "^9.33.0",
 		"eslint-config-prettier": "^10.1.8",
 		"globals": "^16.3.0",
-		"pkgroll": "^2.14.3",
+		"pkgroll": "^2.15.3",
 		"prettier": "^3.6.2",
-		"tsx": "^4.20.3",
-		"typescript": "^5.8.3",
+		"tsx": "^4.20.4",
+		"typescript": "^5.9.2",
 		"vitest": "^3.2.4"
 	}
 }

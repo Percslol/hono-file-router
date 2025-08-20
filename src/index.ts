@@ -41,7 +41,7 @@ async function createFolderRoute({ path }: { path?: string } = {}) {
 		}
 	});
 
-	await Promise.allSettled(promises);
+	await Promise.all(promises);
 
 	return app;
 }
